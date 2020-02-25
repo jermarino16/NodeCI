@@ -15,7 +15,7 @@ module.exports = app => {
     s3.getSignedUrl(
       'putObject',
       {
-        Bucket: 'my-blog-bucket-123',
+        Bucket: 'my-blog-bucket-616',
         ContentType: 'image/jpeg',
         Key: key
       },

@@ -26,9 +26,9 @@ module.exports = app => {
     const { title, content, imageUrl } = req.body;
 
     const blog = new Blog({
-      imageUrl,
       title,
-      content,
+      content,      
+      imageUrl,
       _user: req.user.id
     });
 
