@@ -1,3 +1,5 @@
+Number.prototype._called = {};
+
 const Page = require('./helpers/page');
 
 let page;
@@ -37,9 +39,13 @@ describe('When logged in', async () => {
     });
 
     test('Submitting then saving adds blog to index page', async () => {
+      //Setup image upload
+      const input = await page.$('input[type="file"]');
+      await input.uploadFile('./resources/Kings.jpg');
+      //click submit
       await page.click('button.green');
       await page.waitFor('.card');
-
+      
       const title = await page.getContentsOf('.card-title');
       const content = await page.getContentsOf('p');
 
@@ -62,22 +68,6 @@ describe('When logged in', async () => {
     });
   });
 });
-  test("User can not creat blog posts", async () =>  {
-    const result = await page.evaluate(
-      () => {
-        return fetch("/api/blogs", {
-          method: "POST",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ title: "My title", content: "My Content"})
-        }).then(res => res.json());
-       }
-      );  
-    expect(result).toEqual( { error: 'You must log in!' } );
-    console.log(result);
-  });
 
 describe('User is not logged in', async () => {
   const actions = [
